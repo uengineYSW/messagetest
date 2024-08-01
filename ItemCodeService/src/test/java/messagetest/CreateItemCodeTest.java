@@ -27,8 +27,6 @@ import org.springframework.cloud.stream.test.binder.MessageCollector;
 import org.springframework.context.ApplicationContext;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
-import org.springframework.messaging.MessageHeaders;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.MimeTypeUtils;
@@ -87,7 +85,7 @@ public class CreateItemCodeTest {
         try {
             ItemCode newEntity = new ItemCode();
 
-            newEntity.setId("N/A");
+            newEntity.setId(0L);
             newEntity.setItemCode("M001");
             newEntity.setCodeNo("154");
             newEntity.setCode("");
@@ -127,12 +125,12 @@ public class CreateItemCodeTest {
 
             ItemCodeCreated outputEvent = objectMapper.readValue(
                 receivedPayload,
-                NewItemAdded.class
+                ItemCodeCreated.class
             );
 
             LOGGER.info("Response received: {}", outputEvent);
 
-            assertEquals(outputEvent.getId(), "N/A");
+            assertEquals(outputEvent.getId().longValue(), 0L);
             assertEquals(outputEvent.getItemCode(), "M001");
             assertEquals(outputEvent.getCodeNo(), "154");
             assertEquals(outputEvent.getCode(), "");
